@@ -4,18 +4,22 @@ import styles from '../styles/Home.module.css'
 import { useSockets } from '../context/socket.context'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useRef } from 'react'
+import { useUser } from '@auth0/nextjs-auth0'
 
 
 import Login from '../containers/Login'
-import MainPage from '../containers/mainpage'
 import RoomsContainer from '../containers/Rooms'
 import MessagesContainer from '../containers/Messages'
+import MainPage from '../containers/MainPage'
 
 
 
 
 export default function Home() {
   const {socket,email,setEmail} = useSockets();
+
+  const {user,error,isLoading} = useUser();
+ 
 
   const emailRef = useRef(null);
 
@@ -25,35 +29,35 @@ export default function Home() {
       return
     }
 
-    setEmail(value);
-
-    localStorage.setItem("email",value);
+    
 
 
   }
 
    
-  const {isAuthenticated} = useAuth0();
+ if (user)
+ {
+  setEmail(user.email);
 
-  return (
-    <div>
-      {!email && (
-        <div className={styles.usernameWrapper}>
-          <div className={styles.usernameInner}>
-            <input placeholder="Username" ref={emailRef} />
-            <button className="action" onClick={handleSetEmail}>
-              START
-            </button>
-          </div>
-        </div>
-      )}
-      {email && (
-        <div className={styles.container}>
-          <RoomsContainer />
-          <MessagesContainer />
-        </div>
-      )}
+  localStorage.setItem("email",user.email);
+   return (
+
+  <div className={styles.container}>
+  <RoomsContainer />
+  <MessagesContainer />
+</div>
+
+   )
+ }
+
+
+ return (
+     <div className={styles.usernameWrapper}>
+    <div className={styles.usernameInner}>
+      <Login/>
     </div>
-   
-  )
+  </div>
+ )
+
+  
 }

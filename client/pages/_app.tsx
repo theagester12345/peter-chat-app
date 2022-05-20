@@ -1,22 +1,23 @@
 import '../styles/globals.css'
 import SocketProvider from '../context/socket.context'
-import {Auth0Provider} from '@auth0/auth0-react'
+import { UserProvider } from '@auth0/nextjs-auth0'
 
-const domain = process.env.REACT_APP_DOMAIN_NAME;
-const client_id = process.env.REACT_APP_CLIENT_ID;
 
 function MyApp({ Component, pageProps }) {
-  return <Auth0Provider
-    domain={domain}
-    clientId={client_id}
-    redirectUri='http//localhost:3000'
-    >
-      <SocketProvider>
-      <Component {...pageProps} />
+  return (
+    
+       <SocketProvider>
+         <UserProvider>
+         <Component {...pageProps} />
+         </UserProvider>
+      
     
       </SocketProvider>
 
-    </Auth0Provider>
+   
+     
+  )
+  
    
    
 }

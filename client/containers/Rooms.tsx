@@ -56,6 +56,8 @@ export default function RoomsContainer (){
             );
           })}
         </ul>
+
+        <LogoutButton />
       </nav>
     )
 

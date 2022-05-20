@@ -35,3 +35,11 @@ button.action {
   background-color: black;
   white-space: nowrap;
 }
+
+button.logoutBtn {
+  background-color: red;
+  white-space: nowrap;
+  margin-top: 380px;
+  width: 100%;
+ 
+}
